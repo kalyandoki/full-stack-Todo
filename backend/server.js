@@ -29,9 +29,7 @@ const taskSchema = new mongoose.Schema({
 const Task = mongoose.model("Task", taskSchema);
 
 // Routes
-
-// Get All Tasks
-app.get("/tasks", async (req, res) => {
+app.get("/api/tasks", async (req, res) => {
   try {
     const tasks = await Task.find();
     res.json(tasks);
@@ -39,6 +37,19 @@ app.get("/tasks", async (req, res) => {
     res.status(500).json({ message: "Error retrieving tasks" });
   }
 });
+
+// Get All Tasks
+app.get("/tasks", async (req, res) => {
+  console.log("GET /tasks request received");
+  try {
+    const tasks = await Task.find();
+    console.log("Sending tasks:", tasks);
+    res.json(tasks);
+  } catch (err) {
+    res.status(500).json({ message: "Error retrieving tasks" });
+  }
+});
+
 //IyE5zNMTWks2jR70
 // Add a New Task
 app.post("/tasks", async (req, res) => {
@@ -81,5 +92,5 @@ app.delete("/tasks/:id", async (req, res) => {
 
 // Start Server
 app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+  console.log(`Server running on http://localhost:${PORT}/tasks`);
 });
